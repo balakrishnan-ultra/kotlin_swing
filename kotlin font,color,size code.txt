@@ -1,0 +1,48 @@
+import javax.swing.JFrame
+import javax.swing.JLabel
+import java.awt.FlowLayout
+import java.awt.Color
+import java.awt.Font
+import javax.swing.SwingUtilities
+
+
+fun main()
+{
+    val outputwindowframe = JFrame("Output Designed Window")
+    outputwindowframe.layout = FlowLayout()
+    outputwindowframe.setSize(500,500)
+    outputwindowframe.isVisible=true
+    outputwindowframe.defaultCloseOperation=JFrame.EXIT_ON_CLOSE
+
+
+    //Jlabel is created
+    val l1 = JLabel("label_1")
+    l1.foreground = Color.RED
+
+    val l2= JLabel("____________________________")
+    l2.foreground = Color(128,0,128)
+    l2.font = Font("Arial",Font.BOLD,58)
+
+    val l3= JLabel("label_3")
+    l3.foreground = Color.decode("#236734")
+
+    val l4 = JLabel("label_4")
+    l4.font = Font("Arial",Font.PLAIN,28)
+
+    val l5= JLabel("label_5")
+    val myfont = Font("Arial",Font.BOLD,32)
+    l5.font = myfont
+
+    val l6= JLabel("label_6")
+
+    outputwindowframe.add(l1)
+    outputwindowframe.add(l2)
+    outputwindowframe.add(l3)
+    outputwindowframe.add(l4)
+    outputwindowframe.add(l5)
+    outputwindowframe.add(l6)
+
+
+
+
+}

@@ -1,0 +1,37 @@
+import javax.swing.*
+import java.awt.Color
+
+fun main() {
+    val frame = JFrame("Kotlin JFrame without Layout")
+    frame.setSize(400, 300) // Set the frame's size
+    frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE // Exit on close
+
+    // Set layout to null for absolute positioning
+    frame.layout = null 
+
+    // Create a button
+    val button = JButton("Click Me")
+    // Set the button's position and size (x, y, width, height)
+    button.setBounds(50, 50, 100, 30) 
+    frame.add(button) // Add the button to the frame
+
+    // Create a label
+    val label = JLabel("Hello, World!")
+    label.setBounds(180, 50, 150, 30)
+    frame.add(label)
+
+    // Create a JPanel and add it
+    val panel = JPanel()
+    panel.background = Color.LIGHT_GRAY // Set background color for visibility
+    panel.setBounds(50, 100, 300, 150)
+    // You can also set a null layout for the panel and add components to it
+    panel.layout = null 
+
+    val panelButton = JButton("Panel Button")
+    panelButton.setBounds(20, 20, 120, 30)
+    panel.add(panelButton)
+
+    frame.add(panel)
+
+    frame.isVisible = true // Make the frame visible
+}

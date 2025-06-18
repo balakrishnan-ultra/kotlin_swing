@@ -1,0 +1,27 @@
+import javax.swing.JFrame
+import javax.swing.JLabel
+import java.awt.Font
+
+fun main() {
+    // Create a JFrame
+    val frame = JFrame("JLabel Font Size Example")
+    frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+    frame.setSize(400, 200)
+    frame.setLocationRelativeTo(null) // Center the frame
+
+    // Create a JLabel
+    val label = JLabel("Hello, Kotlin!")
+
+    // Set the initial font
+    label.font = Font("Arial", Font.PLAIN, 16) // Font name, style, size
+
+    // Change the font size
+    val newFont = Font("Arial", Font.BOLD, 24) // New font with larger size and bold style
+    label.font = newFont
+
+    // Add the JLabel to the frame
+    frame.add(label)
+
+    // Make the frame visible
+    frame.isVisible = true
+}

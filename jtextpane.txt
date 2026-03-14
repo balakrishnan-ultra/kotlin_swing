@@ -1,0 +1,55 @@
+import javax.swing.*
+import javax.swing.text.SimpleAttributeSet
+import javax.swing.text.StyleConstants
+import javax.swing.text.StyledDocument
+import java.awt.*
+
+fun main() {
+    SwingUtilities.invokeLater {
+        createAndShowGUI()
+    }
+}
+
+fun createAndShowGUI() {
+    val frame = JFrame("JTextPane Example")
+    frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+    frame.size = Dimension(400, 300)
+    frame.layout = BorderLayout()
+
+    val textPane = JTextPane()
+    val styledDocument: StyledDocument = textPane.styledDocument
+
+    // Create some attributes (styles)
+    val boldAttributeSet = SimpleAttributeSet()
+    StyleConstants.setBold(boldAttributeSet, true)
+
+    val italicAttributeSet = SimpleAttributeSet()
+    StyleConstants.setItalic(italicAttributeSet, true)
+    StyleConstants.setForeground(italicAttributeSet, Color.BLUE)
+
+    val largeFontAttributeSet = SimpleAttributeSet()
+    StyleConstants.setFontSize(largeFontAttributeSet, 18)
+    StyleConstants.setForeground(largeFontAttributeSet, Color.RED)
+
+    try {
+        // Insert text with different styles
+        styledDocument.insertString(styledDocument.length, "This is ", null)
+        styledDocument.insertString(styledDocument.length, "bold ", boldAttributeSet)
+        styledDocument.insertString(styledDocument.length, "and this is ", null)
+        styledDocument.insertString(styledDocument.length, "italic blue", italicAttributeSet)
+        styledDocument.insertString(styledDocument.length, ".\n", null)
+        styledDocument.insertString(styledDocument.length, "Here is some ", null)
+        styledDocument.insertString(styledDocument.length, "large red text", largeFontAttributeSet)
+        styledDocument.insertString(styledDocument.length, ".\n", null)
+        styledDocument.insertString(styledDocument.length, "Plain text again.\n", null)
+
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+
+    // Make the JTextPane scrollable
+    val scrollPane = JScrollPane(textPane)
+
+    frame.add(scrollPane, BorderLayout.CENTER)
+    frame.isVisible = true
+}

@@ -1,0 +1,115 @@
+import java.io.File
+import java.io.FileWriter
+import java.io.IOException
+
+fun generateTextFile(filePath: String, content: String) {
+    val file = File(filePath)
+    var fileWriter: FileWriter? = null
+
+    try {
+        fileWriter = FileWriter(file)
+        fileWriter.write(content)
+        println("Successfully wrote content to: $filePath")
+    } catch (e: IOException) {
+        println("Error writing to file: ${e.message}")
+        e.printStackTrace()
+    } finally {
+        try {
+            fileWriter?.close()
+        } catch (e: IOException) {
+            println("Error closing FileWriter: ${e.message}")
+            e.printStackTrace()
+        }
+    }
+}
+
+fun main() {
+    val filePath = "my_generated_file.txt"
+    val fileContent = """
+        This is some content that will be written to the file.
+        You can include multiple lines of text here.
+        This is the third line.
+        Kotlin is fun!
+    """.trimIndent()
+
+    generateTextFile(filePath, fileContent)
+
+    // You can also generate a file with content from user input or other sources
+    // val userInput = readlnOrNull()
+    // if (userInput != null) {
+    //     generateTextFile("user_input.txt", userInput)
+    // }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//kotline file read code
+import java.io.File
+
+fun readFileAsString(filePath: String): String? {
+    return try {
+        File(filePath).readText()
+    } catch (e: Exception) {
+        println("Error reading file: ${e.message}")
+        null
+    }
+}
+
+fun main() {
+    val filePath = "my_file.txt" // Replace with the actual path to your file
+    val fileContent = readFileAsString(filePath)
+
+    if (fileContent != null) {
+        println("File content:\n$fileContent")
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

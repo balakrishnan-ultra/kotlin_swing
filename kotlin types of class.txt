@@ -1,0 +1,29 @@
+Kotlin provides
+several types of classes and class-like structures, each designed for specific purposes in programming. 
+
+    Regular & Abstract Classes: 
+                Standard classes (class) are final by default, while abstract classes (abstract) cannot be instantiated and are designed for inheritance.
+    
+    Data Class: 
+                Used for holding data; the compiler automatically generates methods like equals(), hashCode(), and toString().
+    
+    Sealed Class/Interface: 
+                Represents restricted, known hierarchies at compile time, ideal for exhaustive when expressions.
+    
+    Enum Class: 
+                Defines a fixed set of constants.
+    
+    Inner Class: 
+                A nested class marked inner that can access its outer class's members.
+
+    Object & Companion Object: 
+                object declares a singleton, while companion object allows for static-like members within a class.
+    
+    Value Class: 
+                Wraps a value to provide domain-specific types without runtime overhead.
+
+    Annotation Class: 
+                Used to define metadata.
+
+    Interfaces: 
+                Define contracts with abstract methods and default implementations.

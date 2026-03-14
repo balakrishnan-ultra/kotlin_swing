@@ -1,0 +1,19 @@
+Swing Layout Managers Supported in Kotlin : 
+
+    BorderLayout: 
+                    The default for a JFrame's content pane, it arranges components in five areas: North, South, East, West, and Center.
+    
+    FlowLayout: 
+                    Arranges components in a row, flowing to the next row when the current one is full. It is the default for JPanel.
+    
+    GridLayout: 
+                    Lays out components in a grid of uniformly sized cells.
+    
+    GridBagLayout: 
+                    A highly flexible and complex layout manager that arranges components using a grid of cells with customizable constraints for positioning, sizing, and spanning.
+    
+    GroupLayout: 
+                    A powerful layout manager that defines layouts independently for horizontal and vertical dimensions, often used in GUI builders like the one in IntelliJ IDEA.
+    
+    BoxLayout: 
+                    Allows multiple components to be laid out either vertically or horizontally without wrapping. 

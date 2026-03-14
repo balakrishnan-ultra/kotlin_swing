@@ -1,0 +1,161 @@
+import java.awt.Toolkit
+import java.awt.datatransfer.Clipboard
+import java.awt.datatransfer.StringSelection
+
+fun copyToClipboardSwing(text: String) {
+    val clipboard: Clipboard = Toolkit.getDefaultToolkit().systemClipboard
+    val stringSelection = StringSelection(text)
+    clipboard.setContents(stringSelection, null)
+    // Optional: Provide user feedback (e.g., a JLabel update or a dialog)
+    println("Text copied to clipboard: $text")
+}
+
+// Example usage within a Swing ActionListener:
+// val copyButton = JButton("Copy")
+// copyButton.addActionListener {
+//     val textToCopy = // Get text from a JTextField or JTextArea
+//     copyToClipboardSwing(textToCopy)
+// }
+
+
+
+
+
+
+import java.awt.Toolkit
+import java.awt.datatransfer.DataFlavor
+import java.awt.datatransfer.UnsupportedFlavorException
+import java.io.IOException
+
+fun pasteFromClipboardSwing(): String? {
+    val clipboard = Toolkit.getDefaultToolkit().systemClipboard
+    return try {
+        clipboard.getData(DataFlavor.stringFlavor) as? String
+    } catch (e: UnsupportedFlavorException) {
+        println("Unsupported data flavor on clipboard.")
+        null
+    } catch (e: IOException) {
+        println("Error accessing clipboard.")
+        null
+    }
+}
+
+// Example usage within a Swing ActionListener:
+// val pasteButton = JButton("Paste")
+// val targetTextField = JTextField()
+// pasteButton.addActionListener {
+//     val pastedText = pasteFromClipboardSwing()
+//     if (pastedText != null) {
+//         targetTextField.text = pastedText
+//     } else {
+//         // Handle the case where the clipboard doesn't contain text
+//         println("Clipboard is empty or does not contain text.")
+//     }
+// }
+
+
+
+import java.awt.*
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
+import javax.swing.*
+
+class ClipboardDemo : JFrame("Clipboard Demo") {
+
+    private val textField = JTextField(20)
+    private val copyButton = JButton("Copy")
+    private val pasteButton = JButton("Paste")
+
+    init {
+        defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+        layout = FlowLayout()
+
+        add(textField)
+        add(copyButton)
+        add(pasteButton)
+
+        copyButton.addActionListener(object : ActionListener {
+            override fun actionPerformed(e: ActionEvent?) {
+                val textToCopy = textField.text
+                copyToClipboardSwing(textToCopy)
+            }
+        })
+
+        pasteButton.addActionListener(object : ActionListener {
+            override fun actionPerformed(e: ActionEvent?) {
+                val pastedText = pasteFromClipboardSwing()
+                if (pastedText != null) {
+                    textField.text = pastedText
+                } else {
+                    JOptionPane.showMessageDialog(this@ClipboardDemo, "Clipboard is empty or does not contain text.", "Paste Error", JOptionPane.ERROR_MESSAGE)
+                }
+            }
+        })
+
+        pack()
+        isVisible = true
+    }
+}
+
+fun main() {
+    EventQueue.invokeLater {
+        ClipboardDemo()
+    }
+}
+
+fun copyToClipboardSwing(text: String) {
+    val clipboard: Clipboard = Toolkit.getDefaultToolkit().systemClipboard
+    val stringSelection = StringSelection(text)
+    clipboard.setContents(stringSelection, null)
+    println("Text copied to clipboard: $text")
+}
+
+fun pasteFromClipboardSwing(): String? {
+    val clipboard = Toolkit.getDefaultToolkit().systemClipboard
+    return try {
+        clipboard.getData(DataFlavor.stringFlavor) as? String
+    } catch (e: UnsupportedFlavorException) {
+        println("Unsupported data flavor on clipboard.")
+        null
+    } catch (e: IOException) {
+        println("Error accessing clipboard.")
+        null
+    }
+}
+
+Explanation:
+
+Import necessary classes:
+
+java.awt.Toolkit: Provides access to the system's default toolkit, including the clipboard.
+java.awt.datatransfer.Clipboard: Represents the system clipboard.
+java.awt.datatransfer.StringSelection: A class to transfer plain text to the clipboard.
+java.awt.datatransfer.DataFlavor: Represents the type of data that can be transferred (e.g., plain text).
+java.awt.datatransfer.UnsupportedFlavorException: Exception thrown if the requested data flavor is not available.
+java.io.IOException: Exception that can occur during clipboard access.
+Swing components like JFrame, JTextField, JButton, FlowLayout, and JOptionPane for the example application.
+java.awt.EventQueue for proper Swing threading.
+copyToClipboardSwing(text: String) function:
+
+Gets the system clipboard using Toolkit.getDefaultToolkit().systemClipboard.
+Creates a StringSelection object containing the text to be copied.
+Sets the contents of the clipboard to the StringSelection. The second argument (null) is for an optional clipboard owner.
+pasteFromClipboardSwing() function:
+
+Gets the system clipboard.
+Attempts to retrieve the clipboard data using clipboard.getData(DataFlavor.stringFlavor). This specifies that we are expecting plain text.
+The result is cast to String?.
+The try-catch block handles potential exceptions:
+UnsupportedFlavorException: If the clipboard doesn't contain data in plain text format.
+IOException: If there's an error accessing the clipboard.
+Returns the pasted text or null if an error occurs or the clipboard doesn't contain text.
+Example Swing Application (ClipboardDemo):
+
+Creates a simple frame with a text field, a "Copy" button, and a "Paste" button.
+Attaches ActionListeners to the buttons:
+The "Copy" button's listener gets the text from the textField and calls copyToClipboardSwing().
+The "Paste" button's listener calls pasteFromClipboardSwing() and sets the textField's text to the pasted content. If pasting fails, it shows an error message.
+Uses EventQueue.invokeLater to ensure that Swing operations are performed on the Event Dispatch Thread (EDT).
+Remember to include the Swing library in your project dependencies if you are not already using it. If you are using Gradle, you would typically have implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8") which includes the necessary Java standard library components.
+
+

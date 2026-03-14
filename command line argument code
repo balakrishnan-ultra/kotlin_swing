@@ -1,0 +1,186 @@
+Here are several ways to access command-line arguments in Kotlin, ranging from basic to more structured approaches:
+
+1. Basic Access in main Function:
+
+The most straightforward way is through the args parameter of the main function.
+
+Kotlin
+
+fun main(args: Array<String>) {
+    println("Number of arguments: ${args.size}")
+    if (args.isNotEmpty()) {
+        println("First argument: ${args[0]}")
+    }
+    if (args.size > 1) {
+        println("Second argument: ${args[1]}")
+    }
+
+    println("All arguments:")
+    for (arg in args) {
+        println(arg)
+    }
+}
+How to Run:
+
+Compile: kotlinc your_file_name.kt -include-runtime -d your_file_name.jar
+Run: java -jar your_file_name.jar arg1 "argument with spaces" arg3
+Output (for the above run command):
+
+Number of arguments: 3
+First argument: arg1
+Second argument: argument with spaces
+All arguments:
+arg1
+argument with spaces
+arg3
+Explanation:
+
+The main function in Kotlin accepts an array of strings (Array<String>) named args.
+Each element in the args array represents a command-line argument passed when running the program.
+Arguments are separated by spaces. To pass an argument containing spaces, enclose it in double quotes.
+2. Using forEachIndexed:
+
+You can use forEachIndexed to access both the index and the value of each argument.
+
+Kotlin
+
+fun main(args: Array<String>) {
+    args.forEachIndexed { index, arg ->
+        println("Argument at index $index: $arg")
+    }
+}
+3. Checking for Argument Presence:
+
+You can easily check if specific arguments were provided.
+
+Kotlin
+
+fun main(args: Array<String>) {
+    if (args.size >= 2) {
+        val inputFile = args[0]
+        val outputFile = args[1]
+        println("Input file: $inputFile")
+        println("Output file: $outputFile")
+        // Proceed with file processing
+    } else {
+        println("Usage: program_name <input_file> <output_file>")
+    }
+}
+4. Using a Library for Argument Parsing (Recommended for Complex Scenarios):
+
+For more complex command-line interfaces with options, flags, and named arguments, using a dedicated library is highly recommended. This makes your code cleaner, more readable, and easier to maintain. Here are a couple of popular options:
+
+a) JCommander:
+
+A widely used Java library that works seamlessly with Kotlin.
+
+Add Dependency (Gradle):
+
+Gradle
+
+implementation("com.beust:jcommander:1.82")
+Kotlin Code:
+
+Kotlin
+
+import com.beust.jcommander.JCommander
+import com.beust.jcommander.Parameter
+
+class Args {
+    @Parameter(names = ["-h", "--help"], description = "Display help message", help = true)
+    var help: Boolean = false
+
+    @Parameter(names = ["-i", "--input"], description = "Path to the input file", required = true)
+    var inputFile: String? = null
+
+    @Parameter(names = ["-o", "--output"], description = "Path to the output file")
+    var outputFile: String = "output.txt"
+
+    @Parameter(names = ["-v", "--verbose"], description = "Enable verbose output")
+    var verbose: Boolean = false
+
+    @Parameter(names = ["--count"], description = "Number of times to process")
+    var count: Int = 1
+}
+
+fun main(args: Array<String>) {
+    val arguments = Args()
+    val jCommander = JCommander.newBuilder()
+        .addObject(arguments)
+        .programName("MyProcessor")
+        .build()
+
+    try {
+        jCommander.parse(*args)
+
+        if (arguments.help) {
+            jCommander.usage()
+            return
+        }
+
+        println("Input File: ${arguments.inputFile}")
+        println("Output File: ${arguments.outputFile}")
+        println("Verbose: ${arguments.verbose}")
+        println("Count: ${arguments.count}")
+
+        // Your main logic here
+    } catch (e: com.beust.jcommander.ParameterException) {
+        println(e.message)
+        jCommander.usage()
+    }
+}
+How to Run:
+
+Bash
+
+java -jar your_file_name.jar -i input.txt -o result.csv --verbose --count 5
+java -jar your_file_name.jar --help
+b) Kodein-CLI:
+
+A Kotlin-specific command-line interface builder.
+
+Add Dependency (Gradle):
+
+Gradle
+
+implementation("org.kodein.di:kodein-di-jvm:7.22.0") // Or latest version
+implementation("org.kodein.cli:kodein-cli:0.9.0") // Or latest version
+Kotlin Code:
+
+Kotlin
+
+import org.kodein.cli.*
+
+class MyCommand : CLICommand("MyProcessor", "A simple command-line processor") {
+    val inputFile by option("-i", "--input", help = "Path to the input file").required()
+    val outputFile by option("-o", "--output", help = "Path to the output file") with default("output.txt")
+    val verbose by flag("-v", "--verbose", help = "Enable verbose output")
+    val count by option("--count", help = "Number of times to process").int().default(1)
+
+    override fun execute() {
+        echo("Input File: $inputFile")
+        echo("Output File: $outputFile")
+        echo("Verbose: $verbose")
+        echo("Count: $count")
+        // Your main logic here
+    }
+}
+
+fun main(args: Array<String>) {
+    val cli = CLI(MyCommand())
+    cli.main(args)
+}
+How to Run:
+
+Bash
+
+java -jar your_file_name.jar -i input.txt -o result.csv --verbose --count 5
+java -jar your_file_name.jar --help
+Choosing the Right Approach:
+
+For very simple scripts with a few positional arguments, the basic main function args array is sufficient.
+If you need options, flags, or named arguments, using a library like JCommander or Kodein-CLI will significantly improve your code's structure and usability.
+Kodein-CLI offers a more Kotlin-idiomatic way to define command-line options.
+JCommander is a mature and widely adopted Java library with extensive features.
+Remember to add the necessary dependencies to your project's build file (e.g., build.gradle.kts or build.gradle) when using external libraries.
+

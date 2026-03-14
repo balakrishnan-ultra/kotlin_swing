@@ -1,0 +1,53 @@
+import javax.swing.*
+import javax.swing.tree.DefaultMutableTreeNode
+import javax.swing.tree.DefaultTreeModel
+import java.awt.*
+
+fun main() {
+    SwingUtilities.invokeLater {
+        createAndShowGUI()
+    }
+}
+
+fun createAndShowGUI() {
+    val frame = JFrame("JTree Example")
+    frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+    frame.size = Dimension(400, 300)
+    frame.layout = BorderLayout()
+
+    // Create the root node
+    val root = DefaultMutableTreeNode("Root")
+
+    // Create child nodes
+    val node1 = DefaultMutableTreeNode("Node 1")
+    val node2 = DefaultMutableTreeNode("Node 2")
+    val node3 = DefaultMutableTreeNode("Node 3")
+
+    // Add child nodes to the root
+    root.add(node1)
+    root.add(node2)
+    root.add(node3)
+
+    // Create sub-child nodes for Node 2
+    val subNode2_1 = DefaultMutableTreeNode("Sub Node 2.1")
+    val subNode2_2 = DefaultMutableTreeNode("Sub Node 2.2")
+    node2.add(subNode2_1)
+    node2.add(subNode2_2)
+
+    // Create the JTree using the root node
+    val treeModel = DefaultTreeModel(root)
+    val tree = JTree(treeModel)
+
+    // Optionally, expand all nodes initially
+    for (i in 0 until tree.rowCount) {
+        tree.expandRow(i)
+    }
+
+    // Create a JScrollPane to make the tree scrollable
+    val scrollPane = JScrollPane(tree)
+
+    // Add the scroll pane to the frame
+    frame.add(scrollPane, BorderLayout.CENTER)
+
+    frame.isVisible = true
+}

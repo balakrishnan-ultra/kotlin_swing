@@ -1,0 +1,110 @@
+import javax.swing.*
+import java.awt.*
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
+import javax.swing.event.ChangeEvent
+import javax.swing.event.ChangeListener
+
+fun main() {
+    SwingUtilities.invokeLater {
+        createAndShowGUI()
+    }
+}
+
+fun createAndShowGUI() {
+    val frame = JFrame("Kotlin Swing Components Demo")
+    frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+    frame.layout = FlowLayout(FlowLayout.LEFT, 10, 10) // Left alignment with gaps
+
+    // JLabel
+    frame.add(JLabel("This is a JLabel:"))
+
+    // JTextField
+    val textField = JTextField(15)
+    textField.text = "Enter text here"
+    frame.add(textField)
+
+    // JButton
+    val button = JButton("Click Me")
+    button.addActionListener {
+        JOptionPane.showMessageDialog(frame, "Button Clicked!")
+    }
+    frame.add(button)
+
+    // JCheckBox
+    val checkBox1 = JCheckBox("Option A")
+    val checkBox2 = JCheckBox("Option B", true) // Initially selected
+    frame.add(JLabel("JCheckBoxes:"))
+    frame.add(checkBox1)
+    frame.add(checkBox2)
+
+    // JRadioButton
+    val radioButton1 = JRadioButton("Radio 1")
+    val radioButton2 = JRadioButton("Radio 2", true) // Initially selected
+    val radioGroup = ButtonGroup()
+    radioGroup.add(radioButton1)
+    radioGroup.add(radioButton2)
+    frame.add(JLabel("JRadioButtons:"))
+    frame.add(radioButton1)
+    frame.add(radioButton2)
+
+    // JComboBox
+    val comboBoxItems = arrayOf("Item 1", "Item 2", "Item 3", "Item 4")
+    val comboBox = JComboBox(comboBoxItems)
+    comboBox.selectedIndex = 0
+    frame.add(JLabel("JComboBox:"))
+    frame.add(comboBox)
+
+    // JList
+    val listItems = arrayOf("Apple", "Banana", "Cherry", "Date")
+    val list = JList(listItems)
+    list.selectionMode = ListSelectionModel.SINGLE_SELECTION
+    list.visibleRowCount = 2
+    frame.add(JLabel("JList:"))
+    frame.add(JScrollPane(list)) // JList usually goes in a JScrollPane
+
+    // JTextArea
+    val textArea = JTextArea(5, 20)
+    textArea.text = "This is a JTextArea.\nYou can type multiple lines here."
+    frame.add(JLabel("JTextArea:"))
+    frame.add(JScrollPane(textArea)) // JTextArea usually goes in a JScrollPane
+
+    // JPasswordField
+    val passwordField = JPasswordField(15)
+    passwordField.echoChar = '*'
+    frame.add(JLabel("JPasswordField:"))
+    frame.add(passwordField)
+
+    // JSlider
+    val slider = JSlider(JSlider.HORIZONTAL, 0, 100, 50)
+    slider.majorTickSpacing = 25
+    slider.minorTickSpacing = 5
+    slider.paintTicks = true
+    slider.paintLabels = true
+    slider.addChangeListener { e ->
+        val source = e.source as JSlider
+        if (!source.getValueIsAdjusting()) {
+            println("Slider value: ${source.value}")
+        }
+    }
+    frame.add(JLabel("JSlider:"))
+    frame.add(slider)
+
+    // JProgressBar
+    val progressBar = JProgressBar(0, 100)
+    progressBar.value = 75
+   // progressBar.stringPainted = true
+    frame.add(JLabel("JProgressBar:"))
+    frame.add(progressBar)
+
+    // JToggleButton
+    val toggleButton = JToggleButton("Toggle")
+    toggleButton.addActionListener {
+        println("Toggle Button state: ${toggleButton.isSelected}")
+    }
+    frame.add(JLabel("JToggleButton:"))
+    frame.add(toggleButton)
+
+    frame.pack()
+    frame.isVisible = true
+}

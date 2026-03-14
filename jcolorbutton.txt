@@ -1,0 +1,40 @@
+import javax.swing.*
+import java.awt.*
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
+
+fun main() {
+    SwingUtilities.invokeLater {
+        createAndShowGUI()
+    }
+}
+
+fun createAndShowGUI() {
+    val frame = JFrame("JColorChooser Example")
+    frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+    frame.layout = FlowLayout()
+
+    val chooseColorButton = JButton("Choose Color")
+    val colorPanel = JPanel()
+    colorPanel.preferredSize = Dimension(50, 50)
+    colorPanel.background = Color.WHITE
+
+    chooseColorButton.addActionListener {
+        val initialColor = colorPanel.background
+        val selectedColor = JColorChooser.showDialog(
+            frame,
+            "Choose a Color",
+            initialColor
+        )
+
+        if (selectedColor != null) {
+            colorPanel.background = selectedColor
+        }
+    }
+
+    frame.add(chooseColorButton)
+    frame.add(colorPanel)
+
+    frame.pack()
+    frame.isVisible = true
+}

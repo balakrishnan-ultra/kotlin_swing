@@ -1,0 +1,105 @@
+import javax.swing.*
+import java.awt.*
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
+
+fun main() {
+    SwingUtilities.invokeLater {
+        createAndShowGUI()
+    }
+}
+
+fun createAndShowGUI() {
+    val frame = JFrame("JMenuItem & JMenu Example")
+    frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+    frame.size = Dimension(400, 300)
+    frame.layout = BorderLayout()
+
+    // Create the JMenuBar
+    val menuBar = JMenuBar()
+
+    // Create the File menu (JMenu)
+    val fileMenu = JMenu("File")
+    menuBar.add(fileMenu)
+
+    // Create File menu items (JMenuItem)
+    val newItem = JMenuItem("New")
+    val openItem = JMenuItem("Open")
+    val saveItem = JMenuItem("Save")
+    val exitItem = JMenuItem("Exit")
+
+    // Add action listeners to File menu items
+    newItem.addActionListener { e ->
+        JOptionPane.showMessageDialog(frame, "New file selected")
+    }
+
+    openItem.addActionListener { e ->
+        JOptionPane.showMessageDialog(frame, "Open file selected")
+    }
+
+    saveItem.addActionListener { e ->
+        JOptionPane.showMessageDialog(frame, "Save file selected")
+    }
+
+    exitItem.addActionListener { e ->
+        frame.dispose() // Close the window
+    }
+
+    // Add File menu items to the File menu
+    fileMenu.add(newItem)
+    fileMenu.add(openItem)
+    fileMenu.add(saveItem)
+    fileMenu.addSeparator() // Adds a visual separator
+    fileMenu.add(exitItem)
+
+    // Create the Edit menu (JMenu)
+    val editMenu = JMenu("Edit")
+    menuBar.add(editMenu)
+
+    // Create Edit menu items (JMenuItem)
+    val cutItem = JMenuItem("Cut")
+    val copyItem = JMenuItem("Copy")
+    val pasteItem = JMenuItem("Paste")
+
+    // Add action listeners to Edit menu items
+    cutItem.addActionListener { e ->
+        JOptionPane.showMessageDialog(frame, "Cut selected")
+    }
+
+    copyItem.addActionListener { e ->
+        JOptionPane.showMessageDialog(frame, "Copy selected")
+    }
+
+    pasteItem.addActionListener { e ->
+        JOptionPane.showMessageDialog(frame, "Paste selected")
+    }
+
+    // Add Edit menu items to the Edit menu
+    editMenu.add(cutItem)
+    editMenu.add(copyItem)
+    editMenu.add(pasteItem)
+
+    // Create a Submenu (JMenu inside another JMenu)
+    val optionsMenu = JMenu("Options")
+    fileMenu.add(optionsMenu)
+
+    // Create items for the Options submenu (JMenuItem)
+    val optionAItem = JMenuItem("Option A")
+    val optionBItem = JMenuItem("Option B")
+
+    optionAItem.addActionListener { e ->
+        JOptionPane.showMessageDialog(frame, "Option A selected")
+    }
+
+    optionBItem.addActionListener { e ->
+        JOptionPane.showMessageDialog(frame, "Option B selected")
+    }
+
+    optionsMenu.add(optionAItem)
+    optionsMenu.add(optionBItem)
+
+    // Set the JMenuBar for the JFrame
+    frame.jMenuBar = menuBar
+
+    frame.isVisible = true
+}

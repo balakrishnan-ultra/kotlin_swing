@@ -1,0 +1,73 @@
+
+import javax.swing.*
+import java.awt.*
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
+
+fun main() {
+    SwingUtilities.invokeLater {
+        createAndShowGUI()
+    }
+}
+
+fun createAndShowGUI() {
+    val frame = JFrame("Swing JPopupMenu Example")
+    frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+    frame.size = Dimension(400, 300)
+    frame.layout = FlowLayout()
+
+    val panel = JPanel()
+    panel.preferredSize = Dimension(300, 200)
+    panel.background = Color.LIGHT_GRAY
+    frame.add(panel)
+
+    // Create the JPopupMenu
+    val popupMenu = JPopupMenu()
+
+    // Create menu items
+    val menuItem1 = JMenuItem("Option 1")
+    val menuItem2 = JMenuItem("Option 2")
+    val menuItem3 = JMenuItem("Option 3")
+
+    // Add action listeners to the menu items
+    menuItem1.addActionListener { e ->
+        JOptionPane.showMessageDialog(frame, "Option 1 selected")
+    }
+
+    menuItem2.addActionListener { e ->
+        JOptionPane.showMessageDialog(frame, "Option 2 selected")
+    }
+
+    menuItem3.addActionListener { e ->
+        JOptionPane.showMessageDialog(frame, "Option 3 selected")
+    }
+
+    // Add menu items to the popup menu
+    popupMenu.add(menuItem1)
+    popupMenu.add(menuItem2)
+    popupMenu.add(menuItem3)
+
+    // Add a separator
+    popupMenu.addSeparator()
+
+    // Create a submenu
+    val subMenu = JMenu("Sub Menu")
+    val subMenuItem1 = JMenuItem("Sub Option A")
+    val subMenuItem2 = JMenuItem("Sub Option B")
+    subMenu.add(subMenuItem1)
+    subMenu.add(subMenuItem2)
+    popupMenu.add(subMenu)
+
+    // Add a MouseListener to the component where the popup should appear
+    panel.addMouseListener(object : MouseAdapter() {
+        override fun mouseReleased(e: MouseEvent) {
+            if (e.isPopupTrigger) {
+                popupMenu.show(e.component, e.x, e.y)
+            }
+        }
+    })
+
+    frame.isVisible = true
+}
